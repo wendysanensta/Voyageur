@@ -1,0 +1,7 @@
+6
+Brest 100 230
+Quimper 260 260
+St_Brieuc 280 400
+Lorient 330 200
+St_Malo 500 410
+Rennes 450 310
