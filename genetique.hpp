@@ -11,7 +11,7 @@ class Individu
     public :
     int
 
-    Individu(int l)
+    Individu(int l, Vector<Villes>)
 };
 //Fonction d'adaptation, créer une classe "tournee" et lui
 
