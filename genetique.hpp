@@ -4,12 +4,18 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include "projet.hpp"
 
-class Tournee
+class Individu
+{
+    public :
+    int
+
+    Individu(int l)
+};
 //Fonction d'adaptation, créer une classe "tournee" et lui
 
 //Génération de nouveaux individus
-
-tournee
+ Tournee hybridation
 
 #endif
