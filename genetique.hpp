@@ -10,6 +10,7 @@
 class Individu
 {
     public :
+    int n ; //taille de l'individu
     virtual double adaptation(Individu& i) const = 0;
 };
 
