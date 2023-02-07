@@ -6,14 +6,23 @@
 #include <utility>
 #include "projet.hpp"
 
+
 class Individu
 {
     public :
-    int
-
-    Individu(int l, Vector<Villes>)
+    virtual double adaptation(Individu& i) const;
 };
-//Fonction d'adaptation, créer une classe "tournee" et lui
+
+class Population
+{
+
+};
+
+class Chemin : public Individu
+{
+    public :
+
+};
 
 //Génération de nouveaux individus
  Tournee hybridation
