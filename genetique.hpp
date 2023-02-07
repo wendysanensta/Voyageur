@@ -6,30 +6,43 @@
 #include <utility>
 #include "projet.hpp"
 
-
+template <typename T>
 class Individu
 {
-    public :
+    private :
     int n ; //taille de l'individu
-    virtual double adaptation(Individu& i) const = 0;
+    vector<T> ind ; //vecteur de T
+    public :
+    Individu(int, vector<T>);   //constructeur
+
+    virtual double adaptation () const = 0;
 };
 
+//constructeur
+template<typename T>
+Individu<T>::Individu(int l, vector<T> v)
+{
+    n=l;
+    ind = v;
+}
+
+template<typename T>
 class Population
 {
     public :
-    Vector<Individu> p;
+    vector<Individu<T>> p;
 };
 
-class Chemin : public Individu
+class Chemin : public Individu<Ville>
 {
+    private :
+    static MatriceAdjacence adj;
+
     public :
-    Vector<Ville> c;
-    double adaptation(Chemin& tournee) const;
+    double adaptation() const;
+
 
 };
-
-//Génération de nouveaux individus
- Tournee hybridation
 
  // on génère un chemin aléatoire, pas forcément licite (sa fonction d'adaptation est égale à l'infini) On la fait muter :
  // si les mutants sont de fonction d'adaptation infinie, alors on en choisit une aléatoirement, jusqu'à ce qu'on tombe sur une ville d'adaptation finie

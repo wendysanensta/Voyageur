@@ -3,9 +3,5 @@
 #include <vector>
 #include <utility>
 #include "projet.hpp"
-#include "genetique.cpp"
+#include "genetique.hpp"
 
-double Chemin::adaptation(Individu& i) const
-{
-
-}
