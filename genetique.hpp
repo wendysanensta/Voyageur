@@ -10,21 +10,12 @@ template <typename T>
 class Individu
 {
     private :
-    int n ; //taille de l'individu
     vector<T> ind ; //vecteur de T
     public :
-    Individu(int, vector<T>);   //constructeur
+    Individu();   //constructeur
 
     virtual double adaptation () const = 0;
 };
-
-//constructeur
-template<typename T>
-Individu<T>::Individu(int l, vector<T> v)
-{
-    n=l;
-    ind = v;
-}
 
 template<typename T>
 class Population
