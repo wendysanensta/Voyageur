@@ -9,59 +9,46 @@
 #include <bits/stdc++.h>
 #include "projet.hpp"
 
-template <typename T>
+
 class Individu
 {
-    private :
-    vector<T> ind ; //vecteur de T
     public :
     Individu();   //constructeur
-
-    int size();
-    void push_back(const T&);
-    T operator[] (int i)  { return ind[i]; };
-
+    virtual void hybridation() const=0;
+    virtual void mutation() const=0;
     virtual double adaptation () const = 0;
 };
 
-template <typename T>
-int Individu<T>::size() {
-    return *this.ind.size();
-}
-
-template <typename T>
-void Individu<T>::push_back(const T& x) {
-    return *this.ind.push_back(x);
-}
 
 
-
-template<typename T>
 class Population
 {
     public :
-    vector<Individu<T>> p;
+    vector<Individu> p;
 
     Population();
 };
 
-template<typename T>
-Population::Population(){
 
 
-    }
-}
-
-class Chemin : public Individu<Ville>
+class Chemin : public Individu
 {
     private :
     static MatriceAdjacence adj;
+    vector<Ville> vec;
 
     public :
-    double adaptation() const;
+    double adaptation();
+    void hybridation();
+    void mutation();
 
+
+    int size();
+    void push_back(const Ville&);
+    Ville operator[] (int i)  { return vec[i]; };
 
 };
+
 
  // on génère un chemin aléatoire, pas forcément licite (sa fonction d'adaptation est égale à l'infini) On la fait muter :
  // si les mutants sont de fonction d'adaptation infinie, alors on en choisit une aléatoirement, jusqu'à ce qu'on tombe sur une ville d'adaptation finie

@@ -15,6 +15,7 @@ public :
     double y;
     //constructeur
     Ville(string name, double a, double b);
+    int indice;
 };
 void print(const Ville & ville);
 double distance(const Ville & ville1, const Ville & ville2);
