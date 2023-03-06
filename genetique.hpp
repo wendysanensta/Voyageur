@@ -33,11 +33,9 @@ class Population
 
 class Chemin : public Individu
 {
-    private :
+    public :
     static MatriceAdjacence adj;
     vector<Ville> vec;
-
-    public :
     double adaptation();
     void hybridation();
     void mutation();

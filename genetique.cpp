@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <limits>
 #include "projet.hpp"
 #include "genetique.hpp"
 
@@ -25,19 +26,19 @@ double Chemin::adaptation()
     {
         if (adj((vec[i]).indice, (vec[i+1]).indice)==-1)
         {
-            int a = std::numeric_limits<HUGE_VAL>::infinity();
+            int a = std::numeric_limits<int>::infinity();
             return a;
-        };
+        }
         else
         {
-            adapt+ = distance[vec[i]][vec[i+1]];
+            adapt =  adapt + distance(vec[i],vec[i+1]);
         }
     }
     return adapt;
 }
 
 
-void hybridation(const Individu& c1, const Individu& c2, Individu& ij, Individu& ji)
+void hybridation(const Chemin& c1, const Chemin& c2, Chemin& ij, Chemin& ji)
 {
     int n = c1.vec.size();
     int l = rand()%n + 1 ; //indice d'hybridation
@@ -47,21 +48,21 @@ void hybridation(const Individu& c1, const Individu& c2, Individu& ij, Individu&
         if (i>l)
         {
             ij.vec[i] = c1.vec[i];
-            ji.vec[i] = c2.vec[j];
+            ji.vec[i] = c2.vec[l];
         }
         else
         {
             ij.vec[i] = c2.vec[i];
-            ji.vec[i] = c1.vec[j];
+            ji.vec[i] = c1.vec[l];
         }
     }
 
 }
 
 
-void mutation(const Individu& c, Individu& c_mute)
+void mutation(const Chemin& c, Chemin& c_mute)
 {
-    int n = c1.vec.size();
+    int n = c.vec.size();
     int k = rand()%n +1;
     int l = rand()%n +1;
     c_mute = c;
@@ -69,20 +70,18 @@ void mutation(const Individu& c, Individu& c_mute)
     c_mute.vec[l] = c.vec[k];
 }
 
-Individu mutation_flip(const Individu& c)
+void mutation_flip(const Chemin& c, Chemin& c_mute)
 {
-    int n = c1.vec.size();
+    int n = c.vec.size();
     int k = rand()%n +1;
     int l = rand()%n +1;
-    Chemin c_mute = c;
     c_mute.vec[k] = c.vec[l];
     c_mute.vec[k-1] = c.vec[l-1];
     c_mute.vec[l] = c.vec[k];
     c_mute.vec[l-1] = c.vec[k-1];
-    return c_mute;
 }
 
-Population reproduction(const Population& p, int n)
+/*Population reproduction(const Population& p, int n)
 {
     Population<int> p_tilde1;
     Population<int> p_tilde2;
@@ -114,4 +113,4 @@ Population reproduction(const Population& p, int n)
 
     for
 
-}
+}*/
