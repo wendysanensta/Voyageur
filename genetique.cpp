@@ -94,11 +94,11 @@ Population reproduction(const Population& p, int n, int methode)
     //calcul de l'adaptation de chaque individu, en supprimant les individus non adaptes
     for (int i=0;i<l;i++)
     {
-        double a = adaptation(p.p[i]);
-        if (a<std::numeric_limits<HUGE_VAL>::infinity())
+        double a = (p.p[i]).adaptation();
+        if (a<std::numeric_limits<int>::infinity())
         {
-            adapt.pushback(a);
-            indices.pushback(i);
+            adapt.push_back(a);
+            indices.push_back(i);
         }
     }
 
@@ -106,23 +106,22 @@ Population reproduction(const Population& p, int n, int methode)
 
     for (int i=0; i<n; i++){
         if (methode % 4==0){
-            p_tilde1[i]=selection_roulette(p)
-
+            p_tilde1(i)=selection_roulette(p);
         }
         if (methode % 4==1) {
-            p_tilde1[i]=selection_rang(p)
+            p_tilde1(i)=selection_rang(p);
         }
         if (methode % 4==2) {
-            p_tilde1[i]=selection_tournoi(p)
+            p_tilde1(i)=selection_tournoi(p);
         }
         if (methode % 4==3) {
-            p_tilde1[i]=eugenisme(p)
+            p_tilde1(i)=eugenisme(p);
         }
     }
 
 
     //hybridation
-    int k = 0
+    int k = 0;
     while (k<n/2)
     {
         int i = rand()%n;
@@ -169,20 +168,23 @@ int selection_rang(const Population& p, vector<double> adapt)
 {
     //tri des individus par leur fonction adaptation
     /*
-    vector<pair<double,int>> adapt;
+    vector<pair<double,int>> paires;
     int n = p.p.size();
 
     for (int i=0; i<n; i++)
     {
         pair<double, int> paire;
-        paire.first = adaptation(p.p[i]);
+        paire.first = adapt(i);
         paire.second = i;
-        adapt.push_back(paire);
+        paires.push_back(paire);
     }
-    sort(adapt.begin(),adapt.end(),compare_pair);
+    sort(paires.begin(),paires.end(),compare_pair);
     */
     vector<double> rang;
-
+    for (int i=0; i<n; i++)
+    {
+        rang(paires(i).second)=i;
+    }
 
 
 }
