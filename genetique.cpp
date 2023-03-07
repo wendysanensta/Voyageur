@@ -82,7 +82,7 @@ void mutation_flip(const Chemin& c, Chemin& c_mute)
     c_mute.vec[l-1] = c.vec[k-1];
 }
 
-Population reproduction(const Population& p, int n)
+Population reproduction(const Population& p, int n, int methode)
 {
     Population p_tilde1;
     Population p_tilde2;
@@ -102,19 +102,24 @@ Population reproduction(const Population& p, int n)
         }
     }
 
-    //selection de n individus
-    int c = 0; //compteur
-    while(c!=n)
-    {
-        while(!adapt.empty())
-        {
-            int k = min_element(adapt.begin(),adapt.end());
-            adapt.delete(k);
-            p_tilde1.p.pushback(k);
-            c = c +1;
-        int k = rand()%n;
-        p_tilde1.p.pushback(p_tilde1.p[k]);
+    //selection de n individus reproducteurs
+
+    for (int i=0; i<n; i++){
+        if (methode % 4==0){
+            p_tilde1[i]=selection_roulette(p)
+
+        }
+        if (methode % 4==1) {
+            p_tilde1[i]=selection_rang(p)
+        }
+        if (methode % 4==2) {
+            p_tilde1[i]=selection_tournoi(p)
+        }
+        if (methode % 4==3) {
+            p_tilde1[i]=eugenisme(p)
+        }
     }
+
 
     //hybridation
     int k = 0
@@ -131,13 +136,15 @@ Population reproduction(const Population& p, int n)
     }
 }
 
-int selection_roulette(const Population& p)
+Chemin selection_roulette(const Population& p, vector<double> adapt)
 {
     double S = 0;
     int n = p.p.size();
+
     for (int i = 0; i<n ; i++)
     {
-        S = S + adaptation(p.p[i]);
+        //S = S + adaptation(p.p[i]);
+        S = S + adapt(i);
     }
     double r = ((double)rand()/RAND_MAX)*S;
     double somme = 0;
@@ -147,7 +154,9 @@ int selection_roulette(const Population& p)
         somme = somme + adaptation(p.pi[i]);
         i = i + 1;
     }
-    return i
+    Chemin c=p(i);
+    p.erase(i);
+    return c;
 }
 
 bool compare_pair(pair p1, pair p2)
@@ -156,11 +165,13 @@ bool compare_pair(pair p1, pair p2)
 }
 
 
-int selection_rang(const Population& p)
+int selection_rang(const Population& p, vector<double> adapt)
 {
     //tri des individus par leur fonction adaptation
+    /*
     vector<pair<double,int>> adapt;
     int n = p.p.size();
+
     for (int i=0; i<n; i++)
     {
         pair<double, int> paire;
@@ -169,6 +180,9 @@ int selection_rang(const Population& p)
         adapt.push_back(paire);
     }
     sort(adapt.begin(),adapt.end(),compare_pair);
+    */
+    vector<double> rang;
+
 
 
 }
