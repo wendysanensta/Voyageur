@@ -20,7 +20,6 @@ class Individu
 };
 
 
-
 class Population
 {
     public :
@@ -30,11 +29,11 @@ class Population
 };
 
 
-
 class Chemin : public Individu
 {
     public :
-    static MatriceAdjacence adj;
+    Chemin(MatriceAdjacence adjacence){ adj=adjacence;};
+    MatriceAdjacence adj;
     vector<Ville> vec;
     double adaptation();
     void hybridation();
@@ -46,6 +45,8 @@ class Chemin : public Individu
     Ville operator[] (int i)  { return vec[i]; };
 
 };
+
+
 
 
  // on génère un chemin aléatoire, pas forcément licite (sa fonction d'adaptation est égale à l'infini) On la fait muter :

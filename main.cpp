@@ -2,6 +2,7 @@
 #include <fstream>
 using namespace std;
 #include "projet.hpp"
+#include "genetique.hpp"
 
 int main()
 {

@@ -8,6 +8,7 @@
 
 
 
+
     int Chemin::size() {
         return (*this).vec.size();
     }
@@ -81,19 +82,19 @@ void mutation_flip(const Chemin& c, Chemin& c_mute)
     c_mute.vec[l-1] = c.vec[k-1];
 }
 
-/*Population reproduction(const Population& p, int n)
+Population reproduction(const Population& p, int n)
 {
-    Population<int> p_tilde1;
-    Population<int> p_tilde2;
+    Population p_tilde1;
+    Population p_tilde2;
     //vecteurs qui nous donnent l'adaptation des individus adaptes ( < infini) et un autre vecteur qui nous donne leurs indices
     vector<double> adapt;
-    vector<int> indices
+    vector<int> indices;
     int l = p.p.size();
 
     //calcul de l'adaptation de chaque individu, en supprimant les individus non adaptes
     for (int i=0;i<l;i++)
     {
-        double a = adaptation(p.pi[i]);
+        double a = adaptation(p.p[i]);
         if (a<std::numeric_limits<HUGE_VAL>::infinity())
         {
             adapt.pushback(a);
@@ -103,14 +104,72 @@ void mutation_flip(const Chemin& c, Chemin& c_mute)
 
     //selection de n individus
     int c = 0; //compteur
-    while((c!=n)&(adapt.size()!=0))
+    while(c!=n)
     {
-        int k = min_element(adapt.begin(),adapt.end());
-        adapt.pop(k);
-        p_tilde1.p.pushback(k);
-        c = c +1;
+        while(!adapt.empty())
+        {
+            int k = min_element(adapt.begin(),adapt.end());
+            adapt.delete(k);
+            p_tilde1.p.pushback(k);
+            c = c +1;
+        int k = rand()%n;
+        p_tilde1.p.pushback(p_tilde1.p[k]);
     }
 
-    for
+    //hybridation
+    int k = 0
+    while (k<n/2)
+    {
+        int i = rand()%n;
+        int j = rand()%n;
+        Chemin chem = hybridation(p_tilde1.p[i],p_tilde1.p[j]);
+        if (adaptation(chem) < std::numeric_limits<HUGE_VAL>::infinity())
+        {
+            p_tilde2.pushback(chem);
+            k = k + 1;
+        }
+    }
+}
 
-}*/
+int selection_roulette(const Population& p)
+{
+    double S = 0;
+    int n = p.p.size();
+    for (int i = 0; i<n ; i++)
+    {
+        S = S + adaptation(p.p[i]);
+    }
+    double r = ((double)rand()/RAND_MAX)*S;
+    double somme = 0;
+    int i = 0;
+    while (somme<S)
+    {
+        somme = somme + adaptation(p.pi[i]);
+        i = i + 1;
+    }
+    return i
+}
+
+bool compare_pair(pair p1, pair p2)
+{
+    return (p1.first<p2.first);
+}
+
+
+int selection_rang(const Population& p)
+{
+    //tri des individus par leur fonction adaptation
+    vector<pair<double,int>> adapt;
+    int n = p.p.size();
+    for (int i=0; i<n; i++)
+    {
+        pair<double, int> paire;
+        paire.first = adaptation(p.p[i]);
+        paire.second = i;
+        adapt.push_back(paire);
+    }
+    sort(adapt.begin(),adapt.end(),compare_pair);
+
+
+}
+

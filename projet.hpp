@@ -29,6 +29,7 @@ class MatriceAdjacence
         vector<int> adjacence; //matrice d'adjacence
 
     //constructeur
+    MatriceAdjacence();
     MatriceAdjacence(vector<Ville> const &villes, vector<pair<int,int>> const& vois): n(villes.size()),adjacence(n*n,-1)
     {
         for (int k=0; k < vois.size(); k++)
