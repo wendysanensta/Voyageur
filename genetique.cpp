@@ -165,25 +165,35 @@ bool compare_pair(pair p1, pair p2)
 }
 
 
-int selection_rang(const Population& p, vector<double> adapt)
+int selection_rang(const Population& p, vector<double> rang)
 {
     //tri des individus par leur fonction adaptation
-    /*
-    vector<pair<double,int>> adapt;
+    vector<pair<double,int>> paires;
     int n = p.p.size();
 
     for (int i=0; i<n; i++)
     {
         pair<double, int> paire;
-        paire.first = adaptation(p.p[i]);
+        paire.first = adaptat(i);
         paire.second = i;
-        adapt.push_back(paire);
+        paris.push_back(paire);
     }
-    sort(adapt.begin(),adapt.end(),compare_pair);
-    */
-    vector<double> rang;
+    sort(paires.begin(),paires.end(),compare_pair);
+    double S = 0;
+    for (int i=0; i<n; i++)
+    {
+        S = S + adapt(i);
+    }
+    double rang = 0;
 
-
+    int i = 0;
+    while (somme<S)
+    {
+        somme = somme + ;
+        i = i + 1;
+    }
+    Chemin c = p(paires(i).second);
+    p.erase(i);
 
 }
 
