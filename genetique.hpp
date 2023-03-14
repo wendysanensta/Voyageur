@@ -27,7 +27,6 @@ class Chemin : public Individu
     vector<Ville> vec;
     Chemin(){};
     Chemin(MatriceAdjacence const & adjacence, vector<Ville> const & v){adj=adjacence; vec = v;};
-
     void hybridation() const override { /* implementation here */ }
     void mutation() const override { /* implementation here */ }
     double adaptation() const override { /* implementation here */ }
@@ -38,6 +37,7 @@ class Chemin : public Individu
 
     int size();
     void push_back(const Ville&);
+
     void affiche();
     //void operator<<(std::ostream& os); bug
     //Ville operator[] (int i)  { return vec[i]; };
@@ -53,18 +53,20 @@ class Population
     public :
     vector<Chemin> p;
     Population(vector<Chemin> const & c){p=c;};
-
+    Population(){};
     void push_back(const Chemin&);
-    Chemin operator[](int i) {return p[i];} ;
+    Chemin operator[](int i) {return p[i];};
+    void affiche();
 };
 
 void hybridation(Chemin& c1, Chemin& c2, Chemin& ij, Chemin& ji);
 
-/*void mutation(const Chemin& c, Chemin& c_mute);
+void mutation(const Chemin& c, Chemin& c_mute);
 void mutation_flip(const Chemin& c, Chemin& c_mute);
 
-Population* reproduction(const Population& p, int n, int methode);
-Chemin* selection_roulette(const Population& p, vector<double> adapt);*/
+void selection_roulette(Population& p_select, Population& p, int taille_popu);
+
+/*Population* reproduction(const Population& p, int n, int methode);*/
 
 
 #endif

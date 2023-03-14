@@ -101,12 +101,21 @@ void Population::push_back(const Chemin& c) {
     (*this).p.push_back(c);
 }
 
+void Population::affiche()
+{
+    int n=p.size();
+    for (int i=0;i<n;i++)
+    {
+        p[i].affiche();
+    }
+}
+
 void hybridation(Chemin& c1, Chemin& c2, Chemin& ij, Chemin& ji)
 {
     srand(time(NULL));
     int n = c1.vec.size();
     int l = rand()%n + 1 ; //indice d'hybridation
-    cout << "indice d'hybridation : " << l << endl;
+    //cout << "indice d'hybridation : " << l << endl;
     //hybridation
     vector<Ville> v1;
     vector<Ville> v2;
@@ -127,12 +136,14 @@ void hybridation(Chemin& c1, Chemin& c2, Chemin& ij, Chemin& ji)
     ji.vec = v2;
 }
 
-/*
+
 void mutation(const Chemin& c, Chemin& c_mute)
 {
     int n = c.vec.size();
-    int k = rand()%n +1;
-    int l = rand()%n +1;
+    srand(time(NULL));
+    int k = rand()%n;
+    int l = rand()%n;
+    //cout << "Indices d'hybridation (k,l) = (" << k <<"," << l << ")" << endl;
     c_mute = c;
     c_mute.vec[k] = c.vec[l];
     c_mute.vec[l] = c.vec[k];
@@ -143,6 +154,7 @@ void mutation_flip(const Chemin& c, Chemin& c_mute)
     int n = c.vec.size();
     int k = rand()%n +1;
     int l = rand()%n +1;
+    //cout << "Indices d'hybridation (k,l) = (" << k <<"," << l << ")" << endl;
     c_mute.vec[k] = c.vec[l];
     c_mute.vec[k-1] = c.vec[l-1];
     c_mute.vec[l] = c.vec[k];
@@ -150,29 +162,48 @@ void mutation_flip(const Chemin& c, Chemin& c_mute)
 }
 
 
-Chemin* selection_roulette(const Population& p, vector<double> adapt)
+void selection_roulette(Population& p_select, Population& p, int taille_popu)
 {
-    double S = 0;
+    int taille = 0;
     int n = p.p.size();
-
+    if (n<taille_popu)
+    {
+        cout << "Erreur : population à sélectionnée plus grande que population initiale" << endl;
+    }
+    srand(time(NULL));
+    double S = 0;
+    vector<double> adapt; //adaptation de chaque chemin
+    vector<int> track; //pour verifier si un individu a déjà été choisi ou pas
     for (int i = 0; i<n ; i++)
     {
-        //S = S + adaptation(p.p[i]);
-        S = S + adapt[i];
+        double a = adaptation(p.p[i]);
+        S = S + a;
+        adapt.push_back(a);
+        track.push_back(0);
     }
-    double r = ((double)rand()/RAND_MAX)*S;
-    double somme = 0;
-    int i = 0;
-    while (somme<S)
+    //selection
+    while (taille<taille_popu)
     {
-        somme = somme + adapt[p[i]];
-        i = i + 1;
+        double r = ((double)rand()/RAND_MAX)*S;
+        double somme = 0;
+        int k = 0;
+        while (somme<r)
+        {
+            somme = somme + adapt[k];
+            k = k + 1;
+        }
+        if (track[k]==0)
+        {
+            Chemin c;
+            c.vec = p[k].vec;
+            c.adj = p[k].adj;
+            p_select.push_back(c);
+            track[k] = 1;
+            taille = taille + 1;
+        }
     }
-    Chemin* c=p(i);
-    p.erase(i);
-    return c;
 }
-
+/*
 bool compare_pair(pair p1, pair p2)
 {
     return (p1.first<p2.first);

@@ -15,6 +15,7 @@ Ville::Ville(string name, double a, double b, int i)
     indice = i;
 }
 
+
 void print(const Ville & ville)
 {
     cout<< ville.nom << "(" << ville.x << "," << ville.y << ")" << endl;

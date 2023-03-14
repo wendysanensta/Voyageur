@@ -16,7 +16,6 @@ public :
     int indice; //indice de la ville dans le fichier texte, commence à 1
     //constructeur
     Ville(string name, double a, double b, int indice);
-
 };
 void print(const Ville & ville);
 double distance(const Ville & ville1, const Ville & ville2);

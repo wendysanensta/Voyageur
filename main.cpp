@@ -56,7 +56,7 @@ int main()
 
     Chemin chemin_test1(adjacence, v_test1); //adaptation finie
     Chemin chemin_test2(adjacence, villes); // adaptation infinie
-    double adapt = adaptation(chemin_test1);
+    double adapt = adaptation(chemin_test2);
     cout << "L'adaptation du chemin est : " << adapt << endl; // semble fonctionner OK
 
     //creation d'une population
@@ -64,25 +64,40 @@ int main()
     popu.push_back(chemin_test1);
     popu.push_back(chemin_test2);
     Population p(popu);
-    cout << "Affichage de la population :" << endl;
+    /*cout << "Affichage de la population :" << endl;
     cout << "Chemin test 1 :" << endl;
     chemin_test1.affiche();
     cout << "Chemin test 2 :" << endl;
-    chemin_test2.affiche();
+    chemin_test2.affiche();*/
 
     //test fonction hybridation
     Chemin hybride1 = chemin_test1;
     Chemin hybride2 = chemin_test2;
-    cout << "ok2" << endl;
     hybridation(chemin_test2, chemin_test2, hybride1, hybride2);
-    cout << "Hybride 1 :" << endl;
+    /*cout << "Hybride 1 :" << endl;
     hybride1.affiche();
     cout << "Hybride 2 :" << endl;
-    hybride2.affiche();
+    hybride2.affiche();*/
 
-    //test initialisation de chemin
+    /*test initialisation de chemin
     Chemin c1 = init_chemin(villes,adjacence);
     cout << "Affichage d'un chemin licite :" << endl;
-    c1.affiche();
+    c1.affiche();*/
+
+    /*test mutation
+    cout << "Chemin initial : " << endl;
+    chemin_test2.affiche();
+    cout << "Chemin muté : " << endl;
+    Chemin chemin_mute = chemin_test2;
+    //mutation(chemin_test2, chemin_mute);
+    mutation_flip(chemin_test2, chemin_mute);
+    chemin_mute.affiche();*/
+
+
+    //test hybridation
+    Population p_select;
+    selection_roulette(p_select, p, 1);
+    cout << "Affichage selection" << endl;
+    p_select.affiche();
     return 0;
 }
