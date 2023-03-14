@@ -44,6 +44,7 @@ class Chemin : public Individu
 
 };
 
+Chemin init_chemin(const vector<Ville> & v, const MatriceAdjacence& adj); //fonction qui cree un chemin licite
 
 double adaptation(const Chemin& c);
 

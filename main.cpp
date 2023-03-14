@@ -79,5 +79,10 @@ int main()
     hybride1.affiche();
     cout << "Hybride 2 :" << endl;
     hybride2.affiche();
+
+    //test initialisation de chemin
+    Chemin c1 = init_chemin(villes,adjacence);
+    cout << "Affichage d'un chemin licite :" << endl;
+    c1.affiche();
     return 0;
 }

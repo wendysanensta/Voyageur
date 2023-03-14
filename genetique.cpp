@@ -44,6 +44,7 @@ double adaptation(const Chemin& c)
     return adapt;
 }
 
+
 int Chemin::size() {
     return (*this).vec.size();
 }
@@ -64,6 +65,36 @@ void Chemin::affiche(){
         cout << c.vec[i]<< endl;
     }
 } bug*/
+
+Chemin init_chemin(const vector<Ville> & v, const MatriceAdjacence& adj){
+    bool res = false;
+    int n = v.size();
+    vector<int> chem;
+    double a = std::numeric_limits<double>::infinity();
+    Chemin chemin;
+    for (int i=0;i<n;i++){
+        chem.push_back(i);
+    }
+    int iter = 0;
+    while (res==false){
+        iter = iter +1;
+        random_shuffle(begin(chem),end(chem));
+        cout << "shuffled : " ;
+        for (int l=0;l<chem.size()-1;l++){
+            cout << chem[l];
+        }
+        cout<< chem[chem.size()] <<endl;
+        vector<Ville> vec;
+        for (int k=0;k<n;k++){
+            vec.push_back(v[k]);
+        }
+        chemin.vec = vec;
+        chemin.adj = adj;
+        res = adaptation(chemin)<a;
+        cout << res << endl;
+    }
+    return chemin;
+}
 
 
 void Population::push_back(const Chemin& c) {
