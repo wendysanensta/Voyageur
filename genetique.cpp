@@ -7,19 +7,8 @@
 #include "genetique.hpp"
 
 
-
-
-    int Chemin::size() {
-        return (*this).vec.size();
-    }
-
-    void Chemin::push_back(const Ville& x) {
-        (*this).vec.push_back(x);
-    }
-
-
 //la fonction adaptation renvoie la longueur du chemin ou +inf s'il n'existe pas.
-double Chemin::adaptation()
+/* Chemin::adaptation()
 {
     int n = vec.size();
     double adapt;
@@ -36,31 +25,78 @@ double Chemin::adaptation()
         }
     }
     return adapt;
+}*/
+
+double adaptation(const Chemin& c)
+{
+    int n = c.vec.size();
+    double adapt = 0;
+    for (int i=0; i<n-1; i++)
+    {
+        if (c.adj((c.vec[i]).indice, (c.vec[i+1]).indice)==-1)
+        {
+            double a = std::numeric_limits<double>::infinity();
+            return a;
+        } else {
+            adapt =  adapt + distance(c.vec[i],c.vec[i+1]);
+        }
+    }
+    return adapt;
 }
 
+int Chemin::size() {
+    return (*this).vec.size();
+}
 
-void hybridation(const Chemin& c1, const Chemin& c2, Chemin& ij, Chemin& ji)
+void Chemin::push_back(const Ville& x) {
+    (*this).vec.push_back(x);
+}
+
+void Chemin::affiche(){
+    int n = vec.size();
+    for (int i=0;i<n;i++){
+        cout << vec[i] << endl;
+    }
+}
+
+/*void operator<<(std::ostream& os,const Chemin& c){
+    for (int i=0;i<c.vec.size();i++){
+        cout << c.vec[i]<< endl;
+    }
+} bug*/
+
+
+void Population::push_back(const Chemin& c) {
+    (*this).p.push_back(c);
+}
+
+void hybridation(Chemin& c1, Chemin& c2, Chemin& ij, Chemin& ji)
 {
+    srand(time(NULL));
     int n = c1.vec.size();
     int l = rand()%n + 1 ; //indice d'hybridation
+    cout << "indice d'hybridation : " << l << endl;
     //hybridation
+    vector<Ville> v1;
+    vector<Ville> v2;
     for (int i=0; i<n; i++)
     {
-        if (i>l)
+        if (i<l)
         {
-            ij.vec[i] = c1.vec[i];
-            ji.vec[i] = c2.vec[l];
+            v1.push_back(c1.vec[i]);
+            v2.push_back(c2.vec[i]);
         }
         else
         {
-            ij.vec[i] = c2.vec[i];
-            ji.vec[i] = c1.vec[l];
+            v1.push_back(c2.vec[i]);
+            v2.push_back(c1.vec[i]);
         }
     }
-
+    ij.vec = v1;
+    ji.vec = v2;
 }
 
-
+/*
 void mutation(const Chemin& c, Chemin& c_mute)
 {
     int n = c.vec.size();
@@ -82,7 +118,36 @@ void mutation_flip(const Chemin& c, Chemin& c_mute)
     c_mute.vec[l-1] = c.vec[k-1];
 }
 
-Population reproduction(const Population& p, int n, int methode)
+
+Chemin* selection_roulette(const Population& p, vector<double> adapt)
+{
+    double S = 0;
+    int n = p.p.size();
+
+    for (int i = 0; i<n ; i++)
+    {
+        //S = S + adaptation(p.p[i]);
+        S = S + adapt[i];
+    }
+    double r = ((double)rand()/RAND_MAX)*S;
+    double somme = 0;
+    int i = 0;
+    while (somme<S)
+    {
+        somme = somme + adapt[p[i]];
+        i = i + 1;
+    }
+    Chemin* c=p(i);
+    p.erase(i);
+    return c;
+}
+
+bool compare_pair(pair p1, pair p2)
+{
+    return (p1.first<p2.first);
+}
+
+Population* reproduction(const Population& p, int n, int methode)
 {
     Population p_tilde1;
     Population p_tilde2;
@@ -94,35 +159,37 @@ Population reproduction(const Population& p, int n, int methode)
     //calcul de l'adaptation de chaque individu, en supprimant les individus non adaptes
     for (int i=0;i<l;i++)
     {
-        double a = adaptation(p.p[i]);
-        if (a<std::numeric_limits<HUGE_VAL>::infinity())
+        double a = (p.p[i]).adaptation();
+        if (a<std::numeric_limits<int>::infinity())
         {
-            adapt.pushback(a);
-            indices.pushback(i);
+            adapt.push_back(a);
+            indices.push_back(i);
         }
     }
 
     //selection de n individus reproducteurs
-
-    for (int i=0; i<n; i++){
+    for (int i=0; i<n; i++)
+    {
+        p_tilde1[i]=selection_roulette(p, adapt);
+    }
+    /*for (int i=0; i<n; i++){
         if (methode % 4==0){
-            p_tilde1[i]=selection_roulette(p)
-
+            p_tilde1(i)=selection_roulette(p);
         }
         if (methode % 4==1) {
-            p_tilde1[i]=selection_rang(p)
+            p_tilde1(i)=selection_rang(p);
         }
         if (methode % 4==2) {
-            p_tilde1[i]=selection_tournoi(p)
+            p_tilde1(i)=selection_tournoi(p);
         }
         if (methode % 4==3) {
-            p_tilde1[i]=eugenisme(p)
+            p_tilde1(i)=eugenisme(p);
         }
     }
 
 
     //hybridation
-    int k = 0
+    int k = 0;
     while (k<n/2)
     {
         int i = rand()%n;
@@ -135,39 +202,14 @@ Population reproduction(const Population& p, int n, int methode)
         }
     }
 }
-
-Chemin selection_roulette(const Population& p, vector<double> adapt)
-{
-    double S = 0;
-    int n = p.p.size();
-
-    for (int i = 0; i<n ; i++)
-    {
-        //S = S + adaptation(p.p[i]);
-        S = S + adapt(i);
-    }
-    double r = ((double)rand()/RAND_MAX)*S;
-    double somme = 0;
-    int i = 0;
-    while (somme<S)
-    {
-        somme = somme + adaptation(p.pi[i]);
-        i = i + 1;
-    }
-    Chemin c=p(i);
-    p.erase(i);
-    return c;
-}
-
-bool compare_pair(pair p1, pair p2)
-{
-    return (p1.first<p2.first);
-}
+*/
 
 
-int selection_rang(const Population& p, vector<double> rang)
+
+/*int selection_rang(const Population& p, vector<double> rang)
 {
     //tri des individus par leur fonction adaptation
+
     vector<pair<double,int>> paires;
     int n = p.p.size();
 
@@ -185,6 +227,17 @@ int selection_rang(const Population& p, vector<double> rang)
         S = S + adapt(i);
     }
     double rang = 0;
+        paire.first = adapt(i);
+        paire.second = i;
+        paires.push_back(paire);
+    }
+    sort(paires.begin(),paires.end(),compare_pair);
+
+    vector<double> rang;
+    for (int i=0; i<n; i++)
+    {
+        rang(paires(i).second)=i;
+    }
 
     int i = 0;
     while (somme<S)
@@ -196,4 +249,5 @@ int selection_rang(const Population& p, vector<double> rang)
     p.erase(i);
 
 }
+*/
 

@@ -13,46 +13,57 @@
 class Individu
 {
     public :
-    Individu();   //constructeur
+    Individu(){};   //constructeur
     virtual void hybridation() const=0;
     virtual void mutation() const=0;
     virtual double adaptation () const = 0;
 };
 
 
-class Population
-{
-    public :
-    vector<Individu> p;
-
-    Population();
-};
-
-
 class Chemin : public Individu
 {
     public :
-    Chemin(MatriceAdjacence adjacence){ adj=adjacence;};
     MatriceAdjacence adj;
     vector<Ville> vec;
-    double adaptation();
-    void hybridation();
-    void mutation();
+    Chemin(){};
+    Chemin(MatriceAdjacence const & adjacence, vector<Ville> const & v){adj=adjacence; vec = v;};
 
+    void hybridation() const override { /* implementation here */ }
+    void mutation() const override { /* implementation here */ }
+    double adaptation() const override { /* implementation here */ }
+
+    //void hybridation();
+    //void mutation();
+    //double adaptation();
 
     int size();
     void push_back(const Ville&);
-    Ville operator[] (int i)  { return vec[i]; };
+    void affiche();
+    //void operator<<(std::ostream& os); bug
+    //Ville operator[] (int i)  { return vec[i]; };
 
 };
 
 
+double adaptation(const Chemin& c);
 
+class Population
+{
+    public :
+    vector<Chemin> p;
+    Population(vector<Chemin> const & c){p=c;};
 
- // on génère un chemin aléatoire, pas forcément licite (sa fonction d'adaptation est égale à l'infini) On la fait muter :
- // si les mutants sont de fonction d'adaptation infinie, alors on en choisit une aléatoirement, jusqu'à ce qu'on tombe sur une ville d'adaptation finie
-// utiliser la fonction min de la STL et l'infini
+    void push_back(const Chemin&);
+    Chemin operator[](int i) {return p[i];} ;
+};
 
+void hybridation(Chemin& c1, Chemin& c2, Chemin& ij, Chemin& ji);
+
+/*void mutation(const Chemin& c, Chemin& c_mute);
+void mutation_flip(const Chemin& c, Chemin& c_mute);
+
+Population* reproduction(const Population& p, int n, int methode);
+Chemin* selection_roulette(const Population& p, vector<double> adapt);*/
 
 
 #endif

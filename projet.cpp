@@ -7,12 +7,12 @@
 using namespace std;
 
 //constructeur de ville
-Ville::Ville(string name, double a, double b)
+Ville::Ville(string name, double a, double b, int i)
 {
     nom=name;
     x=a;
     y=b;
-
+    indice = i;
 }
 
 void print(const Ville & ville)

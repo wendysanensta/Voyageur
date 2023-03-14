@@ -1,0 +1,39 @@
+# depslib dependency file v1.0
+1678786320 source:c:\users\wen21\downloads\projet sim test\genetique.cpp
+	<cmath>
+	<iostream>
+	<vector>
+	<utility>
+	<limits>
+	"projet.hpp"
+	"genetique.hpp"
+
+1678568593 c:\users\wen21\downloads\projet sim test\projet.hpp
+	<cmath>
+	<iostream>
+	<vector>
+	<utility>
+
+1678784432 c:\users\wen21\downloads\projet sim test\genetique.hpp
+	<cmath>
+	<iostream>
+	<vector>
+	<utility>
+	<limits>
+	<random>
+	<bits/stdc++.h>
+	"projet.hpp"
+
+1678784431 source:c:\users\wen21\downloads\projet sim test\main.cpp
+	<iostream>
+	<fstream>
+	"projet.hpp"
+	"genetique.hpp"
+
+1678566685 source:c:\users\wen21\downloads\projet sim test\projet.cpp
+	<cmath>
+	<iostream>
+	<vector>
+	<utility>
+	"projet.hpp"
+

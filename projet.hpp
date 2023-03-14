@@ -13,9 +13,10 @@ public :
     string nom;
     double x;
     double y;
+    int indice; //indice de la ville dans le fichier texte, commence à 1
     //constructeur
-    Ville(string name, double a, double b);
-    int indice;
+    Ville(string name, double a, double b, int indice);
+
 };
 void print(const Ville & ville);
 double distance(const Ville & ville1, const Ville & ville2);
@@ -29,7 +30,7 @@ class MatriceAdjacence
         vector<int> adjacence; //matrice d'adjacence
 
     //constructeur
-    MatriceAdjacence();
+    MatriceAdjacence(){};
     MatriceAdjacence(vector<Ville> const &villes, vector<pair<int,int>> const& vois): n(villes.size()),adjacence(n*n,-1)
     {
         for (int k=0; k < vois.size(); k++)
