@@ -203,12 +203,52 @@ void selection_roulette(Population& p_select, Population& p, int taille_popu)
         }
     }
 }
-/*
-bool compare_pair(pair p1, pair p2)
+
+bool compare_pair(pair<double,int> p1, pair<double,int> p2)
 {
     return (p1.first<p2.first);
 }
 
+void selection_rang(Population& p_select, Population& p, int taille_popu)
+{
+    //tri des individus par leur fonction adaptation
+
+    vector<pair<double,int>> paires; //on initialise le vecteur de paires (adaptation, numero de la ville)
+    int n = p.p.size();
+    double S = 0;
+    srand(time(NULL));
+
+    for (int i=0; i<n; i++)
+    {
+        pair<double, int> paire;
+        double a = adaptation(p.p[i]);
+        S = S + a;
+        paire.first = a ;
+        paire.second = i;
+        paires.push_back(paire);
+    }
+    sort(paires.begin(),paires.end(),compare_pair); //on trie les paires de ville en fonction de leur adaptation
+
+    //selection
+    int taille = 0;
+    while (taille!=taille_popu)
+    {
+        int rang = rand()%n; //on genere un rang au hasard
+        int somme_rang = 0;
+        int compteur = 0;
+        while (somme_rang<rang)
+        {
+            compteur = compteur + 1;
+            somme_rang = somme_rang + compteur;
+        };
+    p_select.push_back(p.p[compteur]);
+    taille = taille + 1;
+    }
+}
+
+
+
+/*
 Population* reproduction(const Population& p, int n, int methode)
 {
     Population p_tilde1;
@@ -268,48 +308,4 @@ Population* reproduction(const Population& p, int n, int methode)
 
 
 
-/*int selection_rang(const Population& p, vector<double> rang)
-{
-    //tri des individus par leur fonction adaptation
-
-    vector<pair<double,int>> paires;
-    int n = p.p.size();
-
-    for (int i=0; i<n; i++)
-    {
-        pair<double, int> paire;
-        paire.first = adaptat(i);
-        paire.second = i;
-        paris.push_back(paire);
-    }
-    sort(paires.begin(),paires.end(),compare_pair);
-    double S = 0;
-    for (int i=0; i<n; i++)
-    {
-        S = S + adapt(i);
-    }
-    double rang = 0;
-        paire.first = adapt(i);
-        paire.second = i;
-        paires.push_back(paire);
-    }
-    sort(paires.begin(),paires.end(),compare_pair);
-
-    vector<double> rang;
-    for (int i=0; i<n; i++)
-    {
-        rang(paires(i).second)=i;
-    }
-
-    int i = 0;
-    while (somme<S)
-    {
-        somme = somme + ;
-        i = i + 1;
-    }
-    Chemin c = p(paires(i).second);
-    p.erase(i);
-
-}
-*/
 

@@ -84,20 +84,33 @@ int main()
     cout << "Affichage d'un chemin licite :" << endl;
     c1.affiche();*/
 
-    /*test mutation
+    /*test mutation et hybridation
     cout << "Chemin initial : " << endl;
     chemin_test2.affiche();
     cout << "Chemin muté : " << endl;
     Chemin chemin_mute = chemin_test2;
+    Chemin chemin_mute2 = chemin_test2;
+    Chemin chemin_mute3 = chemin_test2;
     //mutation(chemin_test2, chemin_mute);
     mutation_flip(chemin_test2, chemin_mute);
-    chemin_mute.affiche();*/
+    chemin_mute.affiche();
 
 
-    //test hybridation
+    hybridation(chemin_test2,chemin_test2,chemin_mute,chemin_mute2);
+    cout << "Test de l'hybridation : " << endl;
+    chemin_mute2.affiche();
+    chemin_mute3.affiche(); //je crois que ça marche*/
+
+
+    //test selection
+    cout << "Population initiale" << endl;
+    p.affiche();
     Population p_select;
-    selection_roulette(p_select, p, 1);
+    //selection_roulette(p_select, p, 1);
+    selection_rang(p_select,p,1);
     cout << "Affichage selection" << endl;
-    p_select.affiche();
+    p_select.affiche(); //il faudrait davantage de chemins pour tester la selection
+
+
     return 0;
 }

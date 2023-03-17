@@ -26,6 +26,11 @@ class Chemin : public Individu
     MatriceAdjacence adj;
     vector<Ville> vec;
     Chemin(){};
+    Chemin(const Chemin& c) //constructeur par copie
+    {
+        adj = c.adj;
+        vec = c.vec;
+    };
     Chemin(MatriceAdjacence const & adjacence, vector<Ville> const & v){adj=adjacence; vec = v;};
     void hybridation() const override { /* implementation here */ }
     void mutation() const override { /* implementation here */ }
@@ -65,6 +70,7 @@ void mutation(const Chemin& c, Chemin& c_mute);
 void mutation_flip(const Chemin& c, Chemin& c_mute);
 
 void selection_roulette(Population& p_select, Population& p, int taille_popu);
+void selection_rang(Population& p_select, Population& p, int taille_popu);
 
 /*Population* reproduction(const Population& p, int n, int methode);*/
 
