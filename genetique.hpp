@@ -59,20 +59,24 @@ class Population
     vector<Chemin> p;
     Population(vector<Chemin> const & c){p=c;};
     Population(){};
+    //Population(const Population& popu){p=popu.p;};
     void push_back(const Chemin&);
     Chemin operator[](int i) {return p[i];};
+
     void affiche();
 };
 
-void hybridation(Chemin& c1, Chemin& c2, Chemin& ij, Chemin& ji);
+void hybridation(const Chemin& c1, const Chemin& c2, Chemin& ij, Chemin& ji);
 
 void mutation(const Chemin& c, Chemin& c_mute);
 void mutation_flip(const Chemin& c, Chemin& c_mute);
 
-void selection_roulette(Population& p_select, Population& p, int taille_popu);
-void selection_rang(Population& p_select, Population& p, int taille_popu);
+void selection_roulette(Population& p_select, Population& p, int taille_popu); //methode 1
+void selection_rang(Population& p_select, Population& p, int taille_popu); //methode 2
+void selection_tournoi(Population& p_select, Population& p, int taille_popu); //methode 3
+void eugenisme(Population& p_select, Population& p, int taille_popu); //methode 4
 
-/*Population* reproduction(const Population& p, int n, int methode);*/
-
+void reproduction(Population& p, int n, int methode);
+void selection_finale(Population& p_finale, Population& p_init, int taille_popu, int methode, int q, int iter);
 
 #endif

@@ -107,7 +107,7 @@ int main()
     p.affiche();
     Population p_select;
     //selection_roulette(p_select, p, 1);
-    selection_rang(p_select,p,1);
+    eugenisme(p_select,p,1);
     cout << "Affichage selection" << endl;
     p_select.affiche(); //il faudrait davantage de chemins pour tester la selection
 

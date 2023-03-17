@@ -110,7 +110,7 @@ void Population::affiche()
     }
 }
 
-void hybridation(Chemin& c1, Chemin& c2, Chemin& ij, Chemin& ji)
+void hybridation(const Chemin& c1, const Chemin& c2, Chemin& ij, Chemin& ji)
 {
     srand(time(NULL));
     int n = c1.vec.size();
@@ -246,66 +246,144 @@ void selection_rang(Population& p_select, Population& p, int taille_popu)
     }
 }
 
-
-
-/*
-Population* reproduction(const Population& p, int n, int methode)
+void selection_tournoi(Population& p_select, Population& p, int taille_popu)
 {
-    Population p_tilde1;
-    Population p_tilde2;
-    //vecteurs qui nous donnent l'adaptation des individus adaptes ( < infini) et un autre vecteur qui nous donne leurs indices
-    vector<double> adapt;
-    vector<int> indices;
-    int l = p.p.size();
-
-    //calcul de l'adaptation de chaque individu, en supprimant les individus non adaptes
-    for (int i=0;i<l;i++)
+    int n = p.p.size();
+    vector <double> adapt;
+    for (int i=0;i<n;i++)
     {
-        double a = (p.p[i]).adaptation();
-        if (a<std::numeric_limits<int>::infinity())
+        double a = adaptation(p.p[i]);
+        adapt.push_back(a);
+    }
+    srand(time(NULL));
+    int taille = 0;
+    while(taille<taille_popu)
+    {
+        int a = rand()%n; //on genere le premier adversaire
+        int b = rand()%n; //on genere le deuxieme adversaire
+        int victoire = rand()%100;
+        int proba = rand()%30 + 70;
+        if (adaptation[a]>=adaptation[b])
         {
-            adapt.push_back(a);
-            indices.push_back(i);
+            victoire = victoire<=proba;
         }
-    }
-
-    //selection de n individus reproducteurs
-    for (int i=0; i<n; i++)
-    {
-        p_tilde1[i]=selection_roulette(p, adapt);
-    }
-    /*for (int i=0; i<n; i++){
-        if (methode % 4==0){
-            p_tilde1(i)=selection_roulette(p);
-        }
-        if (methode % 4==1) {
-            p_tilde1(i)=selection_rang(p);
-        }
-        if (methode % 4==2) {
-            p_tilde1(i)=selection_tournoi(p);
-        }
-        if (methode % 4==3) {
-            p_tilde1(i)=eugenisme(p);
-        }
-    }
-
-
-    //hybridation
-    int k = 0;
-    while (k<n/2)
-    {
-        int i = rand()%n;
-        int j = rand()%n;
-        Chemin chem = hybridation(p_tilde1.p[i],p_tilde1.p[j]);
-        if (adaptation(chem) < std::numeric_limits<HUGE_VAL>::infinity())
+        if (victoire)
         {
-            p_tilde2.pushback(chem);
-            k = k + 1;
+            p_select.push_back(p.p[a]);
+        } else
+        {
+            p_select.push_back(p.p[b]);
+        }
+        taille = taille + 1;
+    }
+}
+
+void eugenisme(Population& p_select, Population& p, int taille_popu)
+{
+    int n = p.p.size();
+    if (taille_popu<n)
+    {
+        for (int i = 0; i<taille_popu ; i++)
+        {
+            p_select.push_back(p.p[i]);
+        }
+    } else
+    {
+        for (int i = 0 ; i<n; i++)
+        {
+            p_select.push_back(p.p[i]);
+        }
+        srand(time(NULL));
+        int taille = n;
+        while (taille<taille_popu)
+        {
+            int a = rand()%n;
+            p_select.push_back(p.p[a]);
+            taille = taille + 1;
         }
     }
 }
-*/
 
 
+void reproduction(Population& p, Population& p_new, int taille_popu, int methode)
+{
+    Population p_tilde; //generation de la population de reproducteurs
+    if (methode % 4 == 0)
+    {
+        selection_roulette(p_tilde, p, taille_popu);
+    } else if (methode % 4 == 1)
+    {
+        selection_rang(p_tilde, p, taille_popu);
+    } else if (methode % 4 == 2)
+    {
+        selection_tournoi(p_tilde, p, taille_popu);
+    } else
+    {
+        eugenisme(p_tilde, p, taille_popu);
+    }
+    int taille = 0;
+    int n = p.p.size();
+    srand(time(NULL));
+    while (taille<taille_popu)
+    {
+        int a = rand()%n;
+        int b = rand()%n;
+        Chemin c1;
+        Chemin c1_mute;
+        Chemin c2;
+        Chemin c2_mute;
+        hybridation(p_tilde[a], p_tilde[b], c1, c2);
+        mutation(c1, c1_mute);
+        mutation(c2, c2_mute);
+        p_new.push_back(c1_mute);
+        p_new.push_back(c2_mute);
+        taille = taille + 1;
+    }
+}
 
+void selection_finale(Population& p_finale, Population& p_init, int taille_popu, int methode, int q, int iter)
+{
+    int n = p_init.p.size();
+    Population pk = p_init;
+    Population p_enfants;
+    for (int i=0; i<iter; i++)
+    {
+        reproduction(pk, p_enfants, taille_popu, methode);
+        if (q==0) //q = 0 seuls les enfants survivent
+        {
+            pk = p_enfants;
+        } else
+        {
+            q = q % n; //au cas où q est plus grand que n
+            vector<pair<double,int>> adaptation_pk;
+            vector<pair<double,int>> adaptation_enfants;
+            for (int i=0;i<n;i++)
+            {
+                double a = adaptation(pk.p[i]);
+                pair<double,int> paire;
+                paire.first = a;
+                paire.second = i;
+                adaptation_pk.push_back(paire);
+
+                double a2 = adaptation(p_enfants.p[i]);
+                pair<double,int> paire2;
+                paire2.first = a2;
+                paire2.second = i;
+                adaptation_enfants.push_back(paire2);
+            }
+            sort(adaptation_pk.begin(),adaptation_pk.end(),compare_pair);
+            sort(adaptation_enfants.begin(),adaptation_enfants.end(),compare_pair);
+            for (int i=0;i<n;i++)
+            {
+                if (i<q)
+                {
+                    pk.push_back(pk.p[adaptation_pk[i].second]);
+                } else
+                {
+                    pk.push_back(p_enfants.p[adaptation_enfants[i].second]);
+                }
+            }
+        }
+    }
+}
 
