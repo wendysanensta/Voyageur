@@ -36,10 +36,6 @@ class Chemin : public Individu
     void mutation() const override { /* implementation here */ }
     double adaptation() const override { /* implementation here */ }
 
-    //void hybridation();
-    //void mutation();
-    //double adaptation();
-
     int size();
     void push_back(const Ville&);
 

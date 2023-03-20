@@ -113,7 +113,8 @@ int main()
 
     //test initialisation chemin
     Chemin c_init;
-    c_init = init_heur(1,6,adjacence,villes);
-
+    c_init = init_heur(1,4,adjacence,villes);
+    cout << "Affichage du chemin initalisé : " << endl;
+    c_init.affiche();
     return 0;
 }

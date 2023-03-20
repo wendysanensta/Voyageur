@@ -31,11 +31,18 @@ double adaptation(const Chemin& c)
 {
     int n = c.vec.size();
     double adapt = 0;
+    vector<int> licite (n,100);
+    bool res = true;
     for (int i=0; i<n-1; i++)
     {
+        double a = std::numeric_limits<double>::infinity();
+        if (licite[i]==1)
+        {
+            return a;
+        }
+        licite[i]=1;
         if (c.adj((c.vec[i]).indice, (c.vec[i+1]).indice)==-1)
         {
-            double a = std::numeric_limits<double>::infinity();
             return a;
         } else {
             adapt =  adapt + distance(c.vec[i],c.vec[i+1]);
@@ -119,21 +126,33 @@ void hybridation(const Chemin& c1, const Chemin& c2, Chemin& ij, Chemin& ji)
     //hybridation
     vector<Ville> v1;
     vector<Ville> v2;
-    for (int i=0; i<n; i++)
+    bool res = false;
+    int iter = 0; //on définit un nombre maximum d'itérations
+    while((res==false)&(iter<1000))
     {
-        if (i<l)
+        for (int i=0; i<n; i++)
         {
-            v1.push_back(c1.vec[i]);
-            v2.push_back(c2.vec[i]);
+            if (i<l)
+            {
+                v1.push_back(c1.vec[i]);
+                v2.push_back(c2.vec[i]);
+            }
+            else
+            {
+                v1.push_back(c2.vec[i]);
+                v2.push_back(c1.vec[i]);
+            }
         }
-        else
-        {
-            v1.push_back(c2.vec[i]);
-            v2.push_back(c1.vec[i]);
-        }
+        ij.vec = v1;
+        ji.vec = v2;
+        res = ((adaptation(ij)<=std::numeric_limits<double>::infinity())&(adaptation(ji)<=std::numeric_limits<double>::infinity())); //on vérifie que l'hybridation soit licite
+        iter = iter + 1;
     }
-    ij.vec = v1;
-    ji.vec = v2;
+    if (iter==1000)
+    {
+        ij=c1;
+        ji=c2;
+    }
 }
 
 
