@@ -187,20 +187,17 @@ void selection_roulette(Population& p_select, Population& p, int taille_popu)
     }
     double S = 0;
     vector<double> adapt; //adaptation de chaque chemin
-    vector<int> track; //pour verifier si un individu a déjà été choisi ou pas
     for (int i = 0; i<n ; i++)
     {
         double a = adaptation(p.p[i]);
         cout << adaptation(p.p[i]) << endl;
         S = S + a;
         adapt.push_back(a);
-        track.push_back(0);
     }
     //selection
     while (taille<taille_popu)
     {
         static default_random_engine re (unsigned(time(nullptr)));
-        cout<<"ok1"<<endl;
         std::uniform_real_distribution<double> unif(0,S);
         cout << "Affichage S dans la boucle : " << S << endl;
         double r = unif(re);
@@ -213,15 +210,12 @@ void selection_roulette(Population& p_select, Population& p, int taille_popu)
             somme = somme + adapt[k];
             k = k + 1;
         }
-        if (track[k]==0)
-        {
-            Chemin c;
-            c.vec = p[k].vec;
-            c.adj = p[k].adj;
-            p_select.push_back(c);
-            track[k] = 1;
-            taille = taille + 1;
-        }
+        Chemin c;
+        c.vec = p[k].vec;
+        c.adj = p[k].adj;
+        p_select.push_back(c);
+        taille = taille + 1;
+
     }
 }
 
