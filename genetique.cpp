@@ -181,10 +181,6 @@ void selection_roulette(Population& p_select, Population& p, int taille_popu)
 {
     int taille = 0;
     int n = p.p.size();
-    if (n<taille_popu)
-    {
-        cout << "Erreur : population à sélectionner plus grande que population initiale" << endl;
-    }
     double S = 0;
     vector<double> adapt; //adaptation de chaque chemin
     for (int i = 0; i<n ; i++)
@@ -210,12 +206,9 @@ void selection_roulette(Population& p_select, Population& p, int taille_popu)
             somme = somme + adapt[k];
             k = k + 1;
         }
-        Chemin c;
-        c.vec = p[k].vec;
-        c.adj = p[k].adj;
+        Chemin c = p[k];
         p_select.push_back(c);
         taille = taille + 1;
-
     }
 }
 
