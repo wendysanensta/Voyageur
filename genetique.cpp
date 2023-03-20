@@ -7,26 +7,6 @@
 #include "genetique.hpp"
 
 
-//la fonction adaptation renvoie la longueur du chemin ou +inf s'il n'existe pas.
-/* Chemin::adaptation()
-{
-    int n = vec.size();
-    double adapt;
-    for (int i=0; i<n-1; i++)
-    {
-        if (adj((vec[i]).indice, (vec[i+1]).indice)==-1)
-        {
-            int a = std::numeric_limits<int>::infinity();
-            return a;
-        }
-        else
-        {
-            adapt =  adapt + distance(vec[i],vec[i+1]);
-        }
-    }
-    return adapt;
-}*/
-
 double adaptation(const Chemin& c)
 {
     int n = c.vec.size();

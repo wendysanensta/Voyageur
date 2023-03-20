@@ -40,7 +40,7 @@ class Chemin : public Individu
     void push_back(const Ville&);
 
     void affiche();
-    //Ville operator[] (int i)  { return vec[i]; };
+    void affiche();
 
 };
 
