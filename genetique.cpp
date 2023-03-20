@@ -113,7 +113,7 @@ void Population::affiche()
     }
 }
 
-void hybridation(const Chemin& c1, const Chemin& c2, Chemin& ij, Chemin& ji)
+void hybridation(Chemin& c1, Chemin& c2, Chemin& ij, Chemin& ji)
 {
     srand(time(NULL));
     int n = c1.vec.size();
@@ -312,14 +312,17 @@ void eugenisme(Population& p_select, Population& p, int taille_popu)
 
 void reproduction(Population& p, Population& p_new, int taille_popu, int methode)
 {
+    cout << "ok1" << endl;
     Population p_tilde; //generation de la population de reproducteurs
     if (methode % 4 == 0)
     {
+        cout << "ok2" << endl;
         selection_roulette(p_tilde, p, taille_popu);
-    } else if (methode % 4 == 1)
+    } if (methode % 4 == 1)
     {
+        cout << "ok2" << endl;
         selection_rang(p_tilde, p, taille_popu);
-    } else if (methode % 4 == 2)
+    } if (methode % 4 == 2)
     {
         selection_tournoi(p_tilde, p, taille_popu);
     } else
@@ -331,16 +334,18 @@ void reproduction(Population& p, Population& p_new, int taille_popu, int methode
     srand(time(NULL));
     while (taille<taille_popu)
     {
+        cout << "ok3" << endl;
         int a = rand()%n;
         int b = rand()%n;
-        Chemin c1;
         Chemin c1_mute;
-        Chemin c2;
         Chemin c2_mute;
-        hybridation(p_tilde[a], p_tilde[b], c1, c2);
-        mutation(c1, c1_mute);
-        mutation(c2, c2_mute);
+        //hybridation(p_tilde.p[a], p_tilde.p[b], c1, c2); on abandonne l'hybridation
+        cout << "Hybridation ok" << endl;
+        mutation_flip(p_tilde[a], c1_mute);
+        cout << "Mutation ok" << endl;
+        mutation_flip(p_tilde[b], c2_mute);
         p_new.push_back(c1_mute);
+        cout << "pushback ok" << endl;
         p_new.push_back(c2_mute);
         taille = taille + 1;
     }

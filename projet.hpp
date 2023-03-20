@@ -35,7 +35,6 @@ class MatriceAdjacence
     int operator[](int i) const{return adjacence[i];}
     int& operator[](int i) {return adjacence[i];}
     double operator()(int i, int j) const {return adjacence[(i-1)*n + (j-1)];} //on commence à compter les lignes et les colonnes à partir de 1
-    //double& operator()(int i, int j) {return adjacence[i*n +j];}
 };
 void printAdjacence(const MatriceAdjacence & adj);
 

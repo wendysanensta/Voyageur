@@ -82,10 +82,6 @@ int main()
     cout << "Hybride 2 :" << endl;
     hybride2.affiche();*/
 
-    /*test initialisation de chemin
-    Chemin c1 = init_chemin(villes,adjacence);
-    cout << "Affichage d'un chemin licite :" << endl;
-    c1.affiche();*/
 
     /*test mutation et hybridation
     cout << "Chemin initial : " << endl;
@@ -118,12 +114,14 @@ int main()
     cout << "Affichage selection" << endl;
     p_select.affiche(); //il faudrait davantage de chemins pour tester la selection
 
-    cout <<endl;
-    //test initialisation chemin
-    //Chemin c_init;
-    //c_init = init_heur(1,adjacence,villes);
-    //cout << "Affichage du chemin initalise : " << endl;
-    //c_init.affiche();
+
+    //test reproduction
+    Population p_repro;
+    reproduction(p, p_repro, 6, 1);
+    cout << "Affichage population reproduction : " << endl;
+    p_repro.affiche();
+
+    /*
     Population pf;
     selection_finale(pf, p, 6, 2, 0, 10);
     cout << "Affichage population finale" << endl;
@@ -132,6 +130,7 @@ int main()
     for (int i=0; i<6 ; i++){
             s+=adaptation(pf.p[i]);
     }
-    cout<<s;
+    cout<<s;*/
+
     return 0;
 }
