@@ -58,7 +58,7 @@ int main()
     Chemin chemin_test2(adjacence, villes); // adaptation infinie
     double adapt = adaptation(init_heur(4,adjacence,villes));
     cout << "L'adaptation du chemin est : " << adapt << endl; // semble fonctionner OK
-
+    cout << endl;
     //creation d'une population
     vector<Chemin> popu;
     popu.push_back(chemin_test1);
@@ -67,59 +67,55 @@ int main()
 
     Population p=pop_init(4, adjacence, villes);
 
-    /*cout << "Affichage de la population :" << endl;
+    cout << "Affichage de la population :" << endl;
     cout << "Chemin test 1 :" << endl;
-    chemin_test1.affiche();
+    chemin_test1.affiche(); cout<<endl;
     cout << "Chemin test 2 :" << endl;
-    chemin_test2.affiche();*/
+    chemin_test2.affiche(); cout<<endl;
 
     //test fonction hybridation
+    cout << "Test de la fonction hybridation sur les deux chemins precedents : " << endl;
     Chemin hybride1 = chemin_test1;
     Chemin hybride2 = chemin_test2;
-    hybridation(chemin_test2, chemin_test2, hybride1, hybride2);
+    hybridation(chemin_test1, chemin_test2, hybride1, hybride2);
     cout << "Hybride 1 :" << endl;
-    hybride1.affiche();
+    hybride1.affiche(); cout<<endl;
     cout << "Hybride 2 :" << endl;
-    hybride2.affiche();
+    hybride2.affiche(); cout<<endl;
 
 
-    /*test mutation et hybridation
+    //test mutation
+    cout << "Test de la fonction mutation/mutation flip" << endl;
     cout << "Chemin initial : " << endl;
-    chemin_test2.affiche();
+    chemin_test2.affiche(); cout<< endl;
     cout << "Chemin muté : " << endl;
     Chemin chemin_mute = chemin_test2;
     Chemin chemin_mute2 = chemin_test2;
     Chemin chemin_mute3 = chemin_test2;
     //mutation(chemin_test2, chemin_mute);
     mutation_flip(chemin_test2, chemin_mute);
-    chemin_mute.affiche();
-
-
-    hybridation(chemin_test2,chemin_test2,chemin_mute,chemin_mute2);
-    cout << "Test de l'hybridation : " << endl;
-    chemin_mute2.affiche();
-    chemin_mute3.affiche(); //je crois que ça marche*/
+    chemin_mute.affiche(); cout<<endl;
 
 
     //test selection
-    cout << "Population initiale" << endl;
-    p.affiche();
-    Population p_select;
+    cout << "Population initiale : " << endl;
+    p.affiche(); cout << endl;
 
-    cout <<endl;
+    Population p_select;
     //selection_roulette(p_select, p, 3);
     selection_rang(p_select, p, 3);
     //selection_tournoi(p_select, p, 3);
     //eugenisme(p_select,p,3);
-    cout << "Affichage selection" << endl;
-    p_select.affiche(); //il faudrait davantage de chemins pour tester la selection
+    cout << "Affichage selection :" << endl;
+    p_select.affiche(); cout << endl;
 
 
     //test reproduction
     Population p_repro;
-    reproduction(p, p_repro, 6, 1);
+    //reproduction(p, p_repro, 6, 1); bug
     cout << "Affichage population reproduction : " << endl;
     p_repro.affiche();
+
 
     /*
     Population pf;
