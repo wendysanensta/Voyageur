@@ -387,3 +387,64 @@ void selection_finale(Population& p_finale, Population& p_init, int taille_popu,
     }
 }
 
+//fonction pour initialiser un chemin valide. Elle prend en arguments les indices des villes de départ et  d'arrivée, la matrice d'adjacence et le vecteur contenant toute les villes dans l'ordre
+
+Chemin init_heur(const int I, const int J, const MatriceAdjacence& adj, const vector<Ville> & villes){
+    int n=adj.n;
+
+    vector<int> visite(n, 0);
+    vector<int> id_chemin;
+    id_chemin.push_back(I);
+    vector<Ville> v;
+
+    int a_traiter=I;
+
+    while (a_traiter!=J){
+        visite[a_traiter] = 1;
+        int dis=numeric_limits<int>::max();
+        int temp;
+        for (int i = 0; i < n; i++) {
+            if (adj(a_traiter+1, i+1)>=0 && adj(a_traiter+1, i+1) < dis && !visite[i]) {
+                dis=adj(a_traiter+1 ,i+1);
+                temp=i;
+            }
+        }
+        cout<<"temp : "<<temp<<endl;
+        id_chemin.push_back(temp);
+        a_traiter=temp;
+
+    }
+    for (int i : id_chemin) {
+        v.push_back(villes[i]);
+    }
+    return Chemin(adj, v);
+}
+
+
+int factorial(int n) {
+    if (n == 0) {
+        return 1;
+    } else {
+        return n * factorial(n-1);
+    }
+}
+
+int binomialCoefficient(int n, int k) {
+    int numerator = factorial(n);
+    int denominator = factorial(k) * factorial(n-k);
+    return numerator / denominator;
+}
+
+
+Population pop_init(const int& p, const int& nbvilles, const MatriceAdjacence& adj, const vector<Ville> & villes){
+    if (p > binomialCoefficient(nbvilles, 2)){
+        vector<Chemin> vp;
+        for (int i=0; i<p; i++){
+            int I = rand()%nbvilles;
+            int J = rand()%nbvilles;
+            vp.push_back(init_heur(I, J, adj, villes));
+        }
+    return Population(vp);
+    }
+    return Population();
+}

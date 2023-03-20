@@ -111,6 +111,9 @@ int main()
     cout << "Affichage selection" << endl;
     p_select.affiche(); //il faudrait davantage de chemins pour tester la selection
 
+    //test initialisation chemin
+    Chemin c_init;
+    c_init = init_heur(1,6,adjacence,villes);
 
     return 0;
 }

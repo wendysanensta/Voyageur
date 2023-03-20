@@ -17,9 +17,9 @@ public :
     //constructeur
     Ville(string name, double a, double b, int indice);
 };
-void print(const Ville & ville);
-double distance(const Ville & ville1, const Ville & ville2);
-ostream & operator<<(ostream & os, const Ville & v);
+void print(const Ville & ville); //affichage de la ville
+double distance(const Ville & ville1, const Ville & ville2); //calcul de la disgance entre deux villes
+ostream & operator<<(ostream & os, const Ville & v); //surcharge de l'opérateur flux pour l'affichage
 
 
 class MatriceAdjacence

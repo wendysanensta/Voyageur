@@ -79,4 +79,10 @@ void eugenisme(Population& p_select, Population& p, int taille_popu); //methode 
 void reproduction(Population& p, int n, int methode);
 void selection_finale(Population& p_finale, Population& p_init, int taille_popu, int methode, int q, int iter);
 
+
+Chemin init_heur(const int, const int, const MatriceAdjacence&, const vector<Ville>&);
+int factorial(int n);
+int binomialCoefficient(int n, int k) ;
+Population pop_init(const int& , const int& , const MatriceAdjacence& , const vector<Ville> & );
+
 #endif
