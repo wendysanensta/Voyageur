@@ -195,10 +195,7 @@ void selection_roulette(Population& p_select, Population& p, int taille_popu)
     {
         static default_random_engine re (unsigned(time(nullptr)));
         std::uniform_real_distribution<double> unif(0,S);
-        cout << "Affichage S dans la boucle : " << S << endl;
         double r = unif(re);
-        cout << "affiche r :" << r << endl;
-        //double r = ((double)rand()/(double(RAND_MAX))*S;
         double somme = 0;
         int k = 0;
         while (somme<r)
@@ -207,7 +204,7 @@ void selection_roulette(Population& p_select, Population& p, int taille_popu)
             k = k + 1;
         }
         //Chemin c = p[k];
-        p_select.push_back(p[k]);
+        p_select.push_back(p[k-1]);
         taille = taille + 1;
     }
 }

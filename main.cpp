@@ -126,6 +126,7 @@ int main()
     //c_init.affiche();
     Population pf;
     selection_finale(pf, p, 6, 2, 0, 10);
+    cout << "Affichage population finale" << endl;
     pf.affiche();
     int s=0;
     for (int i=0; i<6 ; i++){
