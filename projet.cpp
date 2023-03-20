@@ -6,6 +6,19 @@
 
 using namespace std;
 
+//constructeur matrice d'adjacence
+MatriceAdjacence::MatriceAdjacence(vector<Ville> const &villes, vector<pair<int,int>> const& vois): n(villes.size()),adjacence(n*n,-1)
+{
+    for (int k=0; k < vois.size(); k++)
+    {
+        int i=vois[k].first;
+        int j=vois[k].second;
+        double d = distance(villes[i],villes[j]);
+        adjacence[i*n + j] = d;
+        adjacence[j*n + i] = d;
+    }
+}
+
 //constructeur de ville
 Ville::Ville(string name, double a, double b, int i)
 {

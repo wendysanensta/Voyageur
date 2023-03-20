@@ -30,17 +30,8 @@ class MatriceAdjacence
 
     //constructeur
     MatriceAdjacence(){};
-    MatriceAdjacence(vector<Ville> const &villes, vector<pair<int,int>> const& vois): n(villes.size()),adjacence(n*n,-1)
-    {
-        for (int k=0; k < vois.size(); k++)
-        {
-            int i=vois[k].first;
-            int j=vois[k].second;
-            double d = distance(villes[i],villes[j]);
-            adjacence[i*n + j] = d;
-            adjacence[j*n + i] = d;
-        }
-    }
+    MatriceAdjacence(vector<Ville> const &, vector<pair<int,int>> const& );
+
     int operator[](int i) const{return adjacence[i];}
     int& operator[](int i) {return adjacence[i];}
     double operator()(int i, int j) const {return adjacence[(i-1)*n + (j-1)];} //on commence à compter les lignes et les colonnes à partir de 1

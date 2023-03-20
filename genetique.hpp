@@ -76,9 +76,9 @@ void reproduction(Population& p, int n, int methode);
 void selection_finale(Population& p_finale, Population& p_init, int taille_popu, int methode, int q, int iter);
 
 
-Chemin init_heur(const int, const int, const MatriceAdjacence&, const vector<Ville>&);
+Chemin init_heur(const int, const MatriceAdjacence&, const vector<Ville>&);
 int factorial(int n);
 int binomialCoefficient(int n, int k) ;
-Population pop_init(const int& , const int& , const MatriceAdjacence& , const vector<Ville> & );
+Population pop_init(const int& , const MatriceAdjacence& , const vector<Ville> & );
 
 #endif

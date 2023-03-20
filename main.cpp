@@ -6,13 +6,13 @@ using namespace std;
 
 int main()
 {
-    ifstream fichier("C:/users/wen21/downloads/projet sim test/villes.txt");  //On ouvre le fichier
+    ifstream fichier("villes.txt");  //On ouvre le fichier
     int nbr;
     fichier >> nbr;
     string nom;
     double x,y;
     vector<Ville> villes;
-    for (int i=0; i<nbr; i++) //lecture des villes prÃ©sentes dans le fichier
+    for (int i=0; i<nbr; i++) //lecture des villes présentes dans le fichier
     {
         fichier >> nom;
         fichier >> x;
@@ -36,15 +36,15 @@ int main()
     //boucle for sur le nombre de lignes
     while (fichier2 >> i >> j)
     {
-        pair<int,int> paire; paire.first = i-1; paire.second = j-1; //on commence Ã  copter les villes Ã  partir de 1
+        pair<int,int> paire; paire.first = i-1; paire.second = j-1; //on commence à copter les villes à partir de 1
         voisins.push_back(paire);
     }
 
-    //crÃ©ation de la matrice d'adjacence + affichage
+    //création de la matrice d'adjacence + affichage
     MatriceAdjacence adjacence(villes, voisins);
     printAdjacence(adjacence);
 
-    cout << "Test de la fonction adjacence(i,j) pour i=2, j =4 : " << adjacence(2,4) << endl; //test de l'opÃ©rateur M(i,j)
+    cout << "Test de la fonction adjacence(i,j) pour i=2, j =4 : " << adjacence(2,4) << endl; //test de l'opérateur M(i,j)
 
 
     //creation d'un chemin pour tester la fonction adaptation
@@ -63,7 +63,10 @@ int main()
     vector<Chemin> popu;
     popu.push_back(chemin_test1);
     popu.push_back(chemin_test2);
-    Population p(popu);
+    //Population p(popu);
+
+    Population p=pop_init(6, adjacence, villes);
+
     /*cout << "Affichage de la population :" << endl;
     cout << "Chemin test 1 :" << endl;
     chemin_test1.affiche();
@@ -87,7 +90,7 @@ int main()
     /*test mutation et hybridation
     cout << "Chemin initial : " << endl;
     chemin_test2.affiche();
-    cout << "Chemin mutÃ© : " << endl;
+    cout << "Chemin muté : " << endl;
     Chemin chemin_mute = chemin_test2;
     Chemin chemin_mute2 = chemin_test2;
     Chemin chemin_mute3 = chemin_test2;
@@ -99,22 +102,27 @@ int main()
     hybridation(chemin_test2,chemin_test2,chemin_mute,chemin_mute2);
     cout << "Test de l'hybridation : " << endl;
     chemin_mute2.affiche();
-    chemin_mute3.affiche(); //je crois que Ã§a marche*/
+    chemin_mute3.affiche(); //je crois que ça marche*/
 
 
     //test selection
     cout << "Population initiale" << endl;
     p.affiche();
     Population p_select;
-    //selection_roulette(p_select, p, 1);
-    eugenisme(p_select,p,1);
+
+    cout <<endl;
+    selection_roulette(p_select, p, 3);
+    //selection_rang(p_select, p, 3);
+    //selection_tournoi(p_select, p, 3);
+    //eugenisme(p_select,p,3);
     cout << "Affichage selection" << endl;
     p_select.affiche(); //il faudrait davantage de chemins pour tester la selection
 
+    cout <<endl;
     //test initialisation chemin
     Chemin c_init;
-    c_init = init_heur(1,4,adjacence,villes);
-    cout << "Affichage du chemin initalisÃ© : " << endl;
-    c_init.affiche();
+    c_init = init_heur(1,adjacence,villes);
+    //cout << "Affichage du chemin initalise : " << endl;
+    //c_init.affiche();
     return 0;
 }
