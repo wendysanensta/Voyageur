@@ -1,2 +1,2 @@
-Dans le fichier main.cpp :
-lignes 9 et 34, remplacer le chemin des fichiers "villes.txt" et "voisins.txt"
+Ouvrir le fichier "projet sim test.cpb" dans un compilateur et "Build & run"
+afin d'observer les résultats des tests des fonctions.
