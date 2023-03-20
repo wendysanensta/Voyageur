@@ -43,13 +43,13 @@
 	"projet.hpp"
 	"genetique.hpp"
 
-1679324794 c:\users\wen21\downloads\sim202\projet.hpp
+1679335638 c:\users\wen21\downloads\sim202\projet.hpp
 	<cmath>
 	<iostream>
 	<vector>
 	<utility>
 
-1679335467 c:\users\wen21\downloads\sim202\genetique.hpp
+1679336186 c:\users\wen21\downloads\sim202\genetique.hpp
 	<cmath>
 	<iostream>
 	<vector>
@@ -66,7 +66,7 @@
 	<utility>
 	"projet.hpp"
 
-1679335558 source:c:\users\wen21\downloads\sim202\genetique.cpp
+1679335826 source:c:\users\wen21\downloads\sim202\genetique.cpp
 	<cmath>
 	<iostream>
 	<vector>

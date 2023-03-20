@@ -22,7 +22,7 @@ int main()
     }
 
     //Boucle d'affichage des villes lues dans le fichier
-    /*cout << "Lecture des villes dans le fichier texte "<< endl;
+    /*cout << "Lecture des villes dans le fichier texte :"<< endl;
     for (int k=0; k<nbr; k++)
     {
         cout << villes[k] << endl;
@@ -63,7 +63,7 @@ int main()
     vector<Chemin> popu;
     popu.push_back(chemin_test1);
     popu.push_back(chemin_test2);
-    //Population p(popu);
+
 
     Population p=pop_init(4, adjacence, villes);
 
@@ -77,10 +77,10 @@ int main()
     Chemin hybride1 = chemin_test1;
     Chemin hybride2 = chemin_test2;
     hybridation(chemin_test2, chemin_test2, hybride1, hybride2);
-    /*cout << "Hybride 1 :" << endl;
+    cout << "Hybride 1 :" << endl;
     hybride1.affiche();
     cout << "Hybride 2 :" << endl;
-    hybride2.affiche();*/
+    hybride2.affiche();
 
 
     /*test mutation et hybridation

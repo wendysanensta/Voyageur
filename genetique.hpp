@@ -40,7 +40,6 @@ class Chemin : public Individu
     void push_back(const Ville&);
 
     void affiche();
-    void affiche();
 
 };
 
