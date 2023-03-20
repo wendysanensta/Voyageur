@@ -206,8 +206,8 @@ void selection_roulette(Population& p_select, Population& p, int taille_popu)
             somme = somme + adapt[k];
             k = k + 1;
         }
-        Chemin c = p[k];
-        p_select.push_back(c);
+        //Chemin c = p[k];
+        p_select.push_back(p[k]);
         taille = taille + 1;
     }
 }
@@ -271,7 +271,7 @@ void selection_tournoi(Population& p_select, Population& p, int taille_popu)
         int b = rand()%n; //on genere le deuxieme adversaire
         int victoire = rand()%100;
         int proba = rand()%30 + 70;
-        if (adaptation[a]>=adaptation[b])
+        if (adapt[a]>=adapt[b])
         {
             victoire = victoire<=proba;
         }

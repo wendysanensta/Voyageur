@@ -56,7 +56,7 @@ int main()
 
     Chemin chemin_test1(adjacence, v_test1); //adaptation finie
     Chemin chemin_test2(adjacence, villes); // adaptation infinie
-    double adapt = adaptation(chemin_test2);
+    double adapt = adaptation(init_heur(4,adjacence,villes));
     cout << "L'adaptation du chemin est : " << adapt << endl; // semble fonctionner OK
 
     //creation d'une population
@@ -111,8 +111,8 @@ int main()
     Population p_select;
 
     cout <<endl;
-    selection_roulette(p_select, p, 3);
-    //selection_rang(p_select, p, 3);
+    //selection_roulette(p_select, p, 3);
+    selection_rang(p_select, p, 3);
     //selection_tournoi(p_select, p, 3);
     //eugenisme(p_select,p,3);
     cout << "Affichage selection" << endl;
@@ -120,9 +120,17 @@ int main()
 
     cout <<endl;
     //test initialisation chemin
-    Chemin c_init;
-    c_init = init_heur(1,adjacence,villes);
+    //Chemin c_init;
+    //c_init = init_heur(1,adjacence,villes);
     //cout << "Affichage du chemin initalise : " << endl;
     //c_init.affiche();
+    Population pf;
+    selection_finale(pf, p, 6, 2, 0, 10);
+    pf.affiche();
+    int s=0;
+    for (int i=0; i<6 ; i++){
+            s+=adaptation(pf.p[i]);
+    }
+    cout<<s;
     return 0;
 }
