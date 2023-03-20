@@ -31,7 +31,7 @@ double adaptation(const Chemin& c)
 {
     int n = c.vec.size();
     double adapt = 0;
-    vector<int> licite (n,100);
+    vector<int> licite (n,0);
     bool res = true;
     for (int i=0; i<n-1; i++)
     {
@@ -66,12 +66,6 @@ void Chemin::affiche(){
         cout << vec[i] << endl;
     }
 }
-
-/*void operator<<(std::ostream& os,const Chemin& c){
-    for (int i=0;i<c.vec.size();i++){
-        cout << c.vec[i]<< endl;
-    }
-} bug*/
 
 Chemin init_chemin(const vector<Ville> & v, const MatriceAdjacence& adj){
     bool res = false;
@@ -191,13 +185,13 @@ void selection_roulette(Population& p_select, Population& p, int taille_popu)
     {
         cout << "Erreur : population à sélectionner plus grande que population initiale" << endl;
     }
-    srand(time(NULL));
     double S = 0;
     vector<double> adapt; //adaptation de chaque chemin
     vector<int> track; //pour verifier si un individu a déjà été choisi ou pas
     for (int i = 0; i<n ; i++)
     {
         double a = adaptation(p.p[i]);
+        cout << adaptation(p.p[i]) << endl;
         S = S + a;
         adapt.push_back(a);
         track.push_back(0);
@@ -205,24 +199,26 @@ void selection_roulette(Population& p_select, Population& p, int taille_popu)
     //selection
     while (taille<taille_popu)
     {
+        static default_random_engine re (unsigned(time(nullptr)));
         cout<<"ok1"<<endl;
-        double r = ((double)rand()/RAND_MAX)*S;
+        std::uniform_real_distribution<double> unif(0,S);
+        cout << "Affichage S dans la boucle : " << S << endl;
+        double r = unif(re);
+        cout << "affiche r :" << r << endl;
+        //double r = ((double)rand()/(double(RAND_MAX))*S;
         double somme = 0;
         int k = 0;
         while (somme<r)
         {
-            cout<<"ok2"<<endl;
             somme = somme + adapt[k];
             k = k + 1;
         }
         if (track[k]==0)
         {
-            cout<<"ok3"<<endl;
             Chemin c;
             c.vec = p[k].vec;
             c.adj = p[k].adj;
             p_select.push_back(c);
-
             track[k] = 1;
             taille = taille + 1;
         }

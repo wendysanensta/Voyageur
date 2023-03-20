@@ -32,15 +32,14 @@ class Chemin : public Individu
         vec = c.vec;
     };
     Chemin(MatriceAdjacence const & adjacence, vector<Ville> const & v){adj=adjacence; vec = v;};
-    void hybridation() const override { /* implementation here */ }
-    void mutation() const override { /* implementation here */ }
-    double adaptation() const override { /* implementation here */ }
+    void hybridation() const override {};
+    void mutation() const override {};
+    double adaptation() const override {};
 
     int size();
     void push_back(const Ville&);
 
     void affiche();
-    //void operator<<(std::ostream& os); bug
     //Ville operator[] (int i)  { return vec[i]; };
 
 };

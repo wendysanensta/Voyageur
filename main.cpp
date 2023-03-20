@@ -31,7 +31,7 @@ int main()
 
     //Creation de la liste des paires de voisins
     vector<pair<int,int>> voisins;
-    ifstream fichier2("C:/users/wen21/downloads/projet sim test/voisins.txt");
+    ifstream fichier2("voisins.txt");
     int i; int j;
     //boucle for sur le nombre de lignes
     while (fichier2 >> i >> j)
@@ -65,7 +65,7 @@ int main()
     popu.push_back(chemin_test2);
     //Population p(popu);
 
-    Population p=pop_init(6, adjacence, villes);
+    Population p=pop_init(4, adjacence, villes);
 
     /*cout << "Affichage de la population :" << endl;
     cout << "Chemin test 1 :" << endl;

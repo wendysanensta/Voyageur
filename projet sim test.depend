@@ -37,3 +37,41 @@
 	<utility>
 	"projet.hpp"
 
+1679326998 source:c:\users\wen21\downloads\sim202\main.cpp
+	<iostream>
+	<fstream>
+	"projet.hpp"
+	"genetique.hpp"
+
+1679324794 c:\users\wen21\downloads\sim202\projet.hpp
+	<cmath>
+	<iostream>
+	<vector>
+	<utility>
+
+1679327168 c:\users\wen21\downloads\sim202\genetique.hpp
+	<cmath>
+	<iostream>
+	<vector>
+	<utility>
+	<limits>
+	<random>
+	<bits/stdc++.h>
+	"projet.hpp"
+
+1679324794 source:c:\users\wen21\downloads\sim202\projet.cpp
+	<cmath>
+	<iostream>
+	<vector>
+	<utility>
+	"projet.hpp"
+
+1679327217 source:c:\users\wen21\downloads\sim202\genetique.cpp
+	<cmath>
+	<iostream>
+	<vector>
+	<utility>
+	<limits>
+	"projet.hpp"
+	"genetique.hpp"
+
